@@ -11,16 +11,19 @@
 
 </div>
 
+> **By the numbers.** 34,858 French communes mapped · 1,509 global GBFS feeds audited · 37 M bike share trip observations processed · 27 networks benchmarked · 322 cycling poverty deserts identified.
+
 ## What we work on
 
 We measure cycling environments, bike share demand and the social distribution of both, at the granularity at which French transport policy is actually decided: the commune (n = 34,858) and the station (n ≈ 50,000 across France and 6 international networks).
 
 Three open data substrates meet here in a single research pipeline: OpenStreetMap infrastructure, GBFS station feeds, and INSEE social statistics. The pipeline produces:
 
-1. **A commune level supply side composite indicator** (the IMD-4) that improves on the de facto French standard (Cerema cycling infrastructure density) by +18 pts R² in predicting realised commuting share.
-2. **A demand prediction benchmark** on 27 dock based networks across two continents, with paired bootstrap CIs and an explicit decomposition of the +0.27 headline ΔR² into transferable spatial and station fingerprint components.
-3. **A mobility justice diagnostic** that turns the indicator into a ranked, intersectional priority list of 322 cycling poverty deserts for the 2023 to 2027 Plan Vélo.
-4. **A graph signal processing toolkit** that develops the spectral bounds, sampling theoretic siting and empirical learning curves which underpin the prediction work.
+1. **A reproducible audit of 1,509 GBFS feeds worldwide**, exposing the semantic ambiguities of the standard and releasing a 46 column certified catalogue across 48 countries.
+2. **A commune level supply side composite indicator** (the IMD-4) that improves on the de facto French standard (Cerema cycling infrastructure density) by +18 pts R² in predicting realised commuting share.
+3. **A demand prediction benchmark** on 27 dock based networks across two continents, with paired bootstrap CIs and an explicit decomposition of the +0.27 headline ΔR² into transferable spatial and station fingerprint components.
+4. **A mobility justice diagnostic** that turns the indicator into a ranked, intersectional priority list of 322 cycling poverty deserts for the 2023 to 2027 Plan Vélo.
+5. **A graph signal processing toolkit** that develops the spectral bounds, sampling theoretic siting and empirical learning curves which underpin the prediction work.
 
 All released as code, data and reproducible LaTeX under MIT.
 
@@ -35,16 +38,10 @@ flowchart TD
     E[penality-analysis<br/><i>Triple-penalty mobility-justice diagnostic</i>]
 
     A --> B
+    A --> C
     B --> C
     B --> D
     B --> E
-
-    classDef stable fill:#1d4ed8,color:#fff,stroke:#1e3a8a,stroke-width:1px
-    classDef draft  fill:#0891b2,color:#fff,stroke:#0e7490,stroke-width:1px
-    classDef early  fill:#7c3aed,color:#fff,stroke:#5b21b6,stroke-width:1px
-    class A,B stable
-    class C,E draft
-    class D early
 ```
 
 | Repository | Contribution | Method | Status |
@@ -61,12 +58,12 @@ flowchart TD
 
 Every result in every repo can be reproduced from the raw open data sources:
 
-- **OpenStreetMap** (OdbL): cycling infrastructure (I axis), heavy transit stops (M axis proxy).
-- **GBFS** feeds (provider terms): station inventory and real time status for the 27 network panel.
-- **INSEE Filosofi** (Licence Ouverte 2.0): commune level median income, poverty rate, part vélo travail outcome.
-- **Open Elevation** SRTM 30 m (CC BY): topography (T axis).
-- **FUB Baromètre Vélo**, **EMP** survey, **Cerema** cycling infrastructure inventory: calibration and comparison panels.
-- **Lyft, Bluebikes, BIXI, TfL, Citi Bike** trip logs: 37 M observations across the Tier 1 panel.
+- **[OpenStreetMap](https://www.openstreetmap.org)** (OdbL): cycling infrastructure (I axis), heavy transit stops (M axis proxy).
+- **[GBFS](https://gbfs.mobilitydata.org)** feeds (provider terms): station inventory and real time status for the 27 network panel.
+- **[INSEE Filosofi](https://www.insee.fr/fr/statistiques/serie/000436391)** (Licence Ouverte 2.0): commune level median income, poverty rate, part vélo travail outcome.
+- **[Open Elevation](https://www.open-elevation.com)** SRTM 30 m (CC BY): topography (T axis).
+- **[FUB Baromètre Vélo](https://barometre.parlons-velo.fr)**, **[EMP survey](https://www.statistiques.developpement-durable.gouv.fr/enquete-sur-la-mobilite-des-personnes-2018-2019)**, **[Cerema](https://www.cerema.fr)** cycling infrastructure inventory: calibration and comparison panels.
+- **[Lyft](https://www.lyft.com/bikes)** (Bluebikes, Capital Bikeshare, Divvy, Bay Wheels), **[BIXI](https://bixi.com/en/open-data)**, **[TfL](https://cycling.data.tfl.gov.uk)**, **[Citi Bike](https://citibikenyc.com/system-data)** trip logs: 37 M observations across the Tier 1 panel.
 
 Each repo ships:
 
