@@ -1,6 +1,6 @@
 <div align="center">
 
-# cycling-data-lab
+# Cycling Data Lab
 
 **Reproducible research on cycling-environment quality, bike-share demand and mobility justice.**
 
