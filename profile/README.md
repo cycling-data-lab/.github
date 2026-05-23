@@ -2,9 +2,9 @@
 
 # Cycling Data Lab
 
-**Reproducible research on cycling environments, bike share demand, mobility justice — and the graph-spectral generalisation theory that unifies them.**
+**A research program on structural lower bounds for graph-supervised learning — instantiated empirically on materials informatics, urban mobility, bike share demand and mobility justice.**
 
-[![Repos](https://img.shields.io/badge/repositories-7-blue)](https://github.com/orgs/cycling-data-lab/repositories)
+[![Repos](https://img.shields.io/badge/repositories-9-blue)](https://github.com/orgs/cycling-data-lab/repositories)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](https://opensource.org/license/MIT)
 [![Data](https://img.shields.io/badge/data-open-success)](#open-data-and-reproducibility)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20355996.svg)](https://doi.org/10.5281/zenodo.20355996)
@@ -12,11 +12,38 @@
 
 </div>
 
-> **By the numbers.** 34,858 French communes mapped · 1,509 global GBFS feeds audited · 37 M bike share trip observations processed · 27 bike-share networks benchmarked · 322 cycling poverty deserts identified · 8-task MatBench applicability-domain panel · one structural lower bound that connects the two.
+> **By the numbers.** 34,858 French communes mapped · 1,509 global GBFS feeds audited · 37 M bike share trip observations processed · 27 bike-share networks benchmarked · 322 cycling poverty deserts identified · 8-task MatBench applicability-domain panel · one structural lower bound that connects them all.
+
+## Theoretical program
+
+Our central research goal is a **universal spectral lower bound** on the generalisation error of any graph-supervised learner. The bound depends only on three objects — the graph Laplacian, the target signal, and the learner's reachable feature subspace — and is independent of the regressor choice. Each empirical application in this organisation is, at the methodological level, a corollary or instantiation of this single bound.
+
+```mermaid
+flowchart TD
+    P5["<b>structural-bounds-framework</b><br/>Universal spectral lower bound<br/><i>JMLR / FoCM target · in preparation</i>"]
+    P1["<b>materials-applicability-bound</b><br/>Corollary C1 — encoding gap under LSO<br/><i>MLST v1.0-rc.5 · submission-ready</i>"]
+    P4["<b>mobility-applicability-bound</b><br/>Empirical instantiation of C1 on<br/>34,858 French commune mobility panel<br/><i>TR-B target · early draft</i>"]
+    P2["<b>(planned) negative-transfer corollary</b><br/>C2 — spectral disjointness bound<br/><i>verdict GO · ~2 months</i>"]
+    P3["<b>(planned) active-learning corollary</b><br/>C3 — label-complexity dual of C1<br/><i>candidate</i>"]
+
+    P5 -->|C1| P1
+    P5 -->|C2| P2
+    P5 -->|C3| P3
+    P1 -.->|empirical sibling| P4
+```
+
+**Shared theoretical signature.** All bounds in the program take the form
+> *expected loss under evaluation protocol Π ≥ (1 − R²\_spec(𝒮\_𝒜, y)) · Var(y) − slack(Π, 𝒮\_𝒜)*,
+
+where R²\_spec is the projection-R² of the target signal y onto the learner's reachable feature subspace 𝒮\_𝒜, computed in the eigenbasis of the graph Laplacian, and the slack term is controlled by the Pesenson sampling quality of the protocol on that subspace ([Pesenson 2008](https://arxiv.org/abs/0801.2030); [Anis–Gadde–Ortega 2016](https://arxiv.org/abs/1510.00297); the extension to arbitrary feature subspaces follows [Chepuri–Leus 2018](https://ece.iisc.ac.in/~spchepuri/publications/icassp18chepuri1.pdf), [Tanaka–Eldar 2020](https://arxiv.org/abs/1905.04441)).
+
+**Open conjecture (saturation).** The Pesenson-ridge estimator on the restricted feature subspace saturates the bound up to O(1/n). If true, this provides an *efficient estimator* in the sense of the classical Cramér–Rao bound, completing the analogy for graph-supervised learning.
+
+**Why the program is organised this way.** Publishing several focused corollaries alongside the universal framework yields both tactical impact (each corollary stands on its own) and strategic coherence (the program builds a recognisable theoretical lane, in the spirit of how Cramér–Rao bounds organise classical estimation theory). Cross-domain controls (cycling networks, MovieLens, materials) are an intrinsic part of the methodology, not an afterthought: every corollary is validated on at least two unrelated domains to confirm that it reflects a property of graph-supervised learning, not an artefact of any single field.
 
 ## What we work on
 
-We measure cycling environments, bike share demand and the social distribution of both, at the granularity at which French transport policy is actually decided: the commune (n = 34,858) and the station (n ≈ 50,000 across France and 6 international networks). Methodologically, the same graph-signal-processing tools that we built for cycling network expansion turn out to apply to materials informatics, and the resulting structural theorem now lives as its own sub-project ([materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound), MLST submission).
+We measure cycling environments, bike share demand and the social distribution of both, at the granularity at which French transport policy is actually decided: the commune (n = 34,858) and the station (n ≈ 50,000 across France and 6 international networks). Methodologically, the same graph-signal-processing tools that we built for cycling network expansion turn out to apply far beyond that setting — to materials informatics ([materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound), MLST submission), to urban mobility transferability ([mobility-applicability-bound](https://github.com/cycling-data-lab/mobility-applicability-bound), TR-B target), and ultimately to a unified theoretical statement ([structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework)) of which the others are corollaries.
 
 Three open data substrates meet here in a single research pipeline: OpenStreetMap infrastructure, GBFS station feeds, and INSEE social statistics. Plus, increasingly, MatBench DFT panels for the materials-side methodology work. The pipeline produces:
 
@@ -26,6 +53,8 @@ Three open data substrates meet here in a single research pipeline: OpenStreetMa
 4. **A mobility justice diagnostic** that turns the indicator into a ranked, intersectional priority list of 322 cycling poverty deserts for the 2023 to 2027 Plan Vélo.
 5. **A graph signal processing toolkit** that develops the spectral bounds, sampling theoretic siting and empirical learning curves which underpin the prediction work.
 6. **A structural lower bound on the applicability-domain gap** in materials property prediction, derived from the same GSP framework as the bike-share siting bounds, validated on 8 MatBench tasks with a foundation-model encoder-discrimination oracle test (CHGNet).
+7. **An empirical instantiation of that same bound in urban mobility**, on the 34,858 French commune panel — answering the question "why do mode-choice models trained in city A fail in city B?" in the same language as the materials encoding gap.
+8. **A unified theoretical framework** that contains all of the above as corollaries of a single regressor-independent spectral inequality.
 
 All released as code, data and reproducible LaTeX under MIT, with Zenodo DOIs minted on every versioned release.
 
@@ -38,7 +67,9 @@ flowchart TD
     C[bikeshare-demand-forecasting<br/><i>Prediction + leave-station-out siting</i>]
     D[bikeshare-gsp-tools<br/><i>Spectral bounds · D-optimal siting · learning curves</i>]
     E[penality-analysis<br/><i>Triple-penalty mobility-justice diagnostic</i>]
-    F[materials-applicability-bound<br/><i>Structural lower bound · 8-task MatBench · CHGNet oracle test</i>]
+    F[materials-applicability-bound<br/><i>Corollary C1 · 8-task MatBench · CHGNet oracle test</i>]
+    M[mobility-applicability-bound<br/><i>Empirical instantiation of C1 on 34,858 communes</i>]
+    U[structural-bounds-framework<br/><i>Universal spectral lower bound · contains C1–C3 as corollaries</i>]
     G[paper-template<br/><i>Starter repo for new papers</i>]
 
     A --> B
@@ -46,15 +77,23 @@ flowchart TD
     B --> C
     B --> D
     B --> E
+    B --> M
     D -.->|GSP framework transfers| F
     F -.->|methodology contributes back| D
+    F -.->|sibling empirical| M
+    U ==>|C1| F
+    U ==>|empirical sibling of C1| M
     G -.->|template for| F
+    G -.->|template for| M
+    G -.->|template for| U
     G -.->|template for| C
 ```
 
 | Repository | Contribution | Method | Status |
 |:---|:---|:---|:---|
-| **[materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound)** | **First regressor-independent structural lower bound on the applicability-domain gap** in materials property prediction | Cochran finite-population identity + Talagrand-contraction Rademacher bound + Pesenson sampling, validated on 8 MatBench panels with CIG = 18× to 145× above shuffled-kNN null | **v1.0-rc.5, MLST submission-ready** (Zenodo DOI [10.5281/zenodo.20355996](https://doi.org/10.5281/zenodo.20355996)) |
+| **[structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework)** | **Universal spectral lower bound** on graph-supervised learning (contains C1–C3 as corollaries) | Pesenson sampling on arbitrary feature subspaces + Cochran finite-population identity + Talagrand-contraction Rademacher; open conjecture: Pesenson-ridge estimator saturates the bound | **In preparation**, JMLR / FoCM target |
+| **[materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound)** | **Corollary C1**: first regressor-independent structural lower bound on the applicability-domain gap in materials property prediction | Cochran finite-population identity + Talagrand-contraction Rademacher + Pesenson sampling, validated on 8 MatBench panels with CIG = 18× to 145× above shuffled-kNN null | **v1.0-rc.5, MLST submission-ready** (Zenodo DOI [10.5281/zenodo.20355996](https://doi.org/10.5281/zenodo.20355996)) |
+| **[mobility-applicability-bound](https://github.com/cycling-data-lab/mobility-applicability-bound)** | Empirical instantiation of C1 in urban mobility (why mode-choice models trained in city A fail in city B) | Same framework as materials-applicability-bound, applied to the 34,858 French commune mobility panel | Early draft, TR-B target |
 | **[imd-national-catalogue](https://github.com/cycling-data-lab/imd-national-catalogue)** | IMD-4 cycling environment composite on 34,858 French communes | Bayesian simplex MCMC calibrated on FUB and EMP panels | v0.2 beta (Hugging Face and Zenodo planned) |
 | **[bikeshare-demand-forecasting](https://github.com/cycling-data-lab/bikeshare-demand-forecasting)** | IMD augmented bike share demand prediction (temporal and leave station out) | LightGBM with paired station bootstrap (B = 1000) on a 9 network LSO panel | Working draft, pre submission |
 | **[bikeshare-gsp-tools](https://github.com/cycling-data-lab/bikeshare-gsp-tools)** | Graph signal processing foundations for cycling network expansion | Symmetric Laplacian spectral bounds and D optimal greedy submodular siting (Nemhauser 1−1/e) | Early draft, theory development in progress |
@@ -62,7 +101,7 @@ flowchart TD
 | **[gbfs-audit-catalogue](https://github.com/cycling-data-lab/gbfs-audit-catalogue)** | Reproducible audit of 1,509 GBFS bike share feeds across 48 countries | 46 column reference schema with an anomaly detection layer | Stable, Zenodo archived |
 | **[paper-template](https://github.com/cycling-data-lab/paper-template)** | Starter directory for new papers in this organisation | LaTeX + iopjournal.cls + numbered experiment scripts + reproducibility infrastructure + Zenodo metadata, all wired by default | Template repo |
 
-> **Status note.** As of November 2026, [materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound) is the first manuscript from this organisation reaching submission-ready state (MLST, IOP Publishing). The other working drafts are released openly during the writing process so that feedback can shape the eventual submission.
+> **Status note.** As of May 2026, [materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound) is the first manuscript from this organisation reaching submission-ready state (MLST, IOP Publishing). The unified framework ([structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework)) is in active preparation; planned negative-transfer (C2) and active-learning (C3) corollaries will follow as standalone repos once their drafts mature. The other working drafts are released openly during the writing process so that feedback can shape the eventual submission.
 
 ## Open data and reproducibility
 
@@ -92,8 +131,10 @@ New repos in this organisation should be created from [paper-template](https://g
 ```bibtex
 @misc{cyclingDataLab,
   author       = {Foss\'e, Rohan and Pallares, Ga\"el},
-  title        = {{cycling-data-lab}: open research on cycling environments,
-                  bike share demand, mobility justice and applicability-domain theory},
+  title        = {{cycling-data-lab}: a research program on structural lower bounds
+                  for graph-supervised learning, with empirical instantiations in
+                  materials informatics, urban mobility, bike share demand and
+                  mobility justice},
   year         = {2026},
   howpublished = {\url{https://github.com/cycling-data-lab}}
 }
@@ -120,6 +161,6 @@ For larger collaborations (joint papers, data sharing, code contributions), emai
 
 <div align="center">
 
-*Cycling data, open by default — and the same GSP framework, wherever it leads.*
+*One spectral lower bound, several empirical domains — and the data, code and LaTeX to reproduce every claim.*
 
 </div>
