@@ -20,11 +20,11 @@ Our central research goal is a **universal spectral lower bound** on the general
 
 ```mermaid
 flowchart TD
-    P5["<b>structural-bounds-framework</b><br/>Universal spectral lower bound<br/><i>JMLR / FoCM target · in preparation</i>"]
+    P5["<b>structural-bounds-framework</b><br/>Universal spectral lower bound<br/>+ C1, C2, C3 proofs absorbed<br/><i>JMLR / FoCM · v0.4 working draft (20 pp main + 5 pp SI)</i>"]
     P1["<b>materials-applicability-bound</b><br/>Corollary C1 — encoding gap under LSO<br/><i>MLST v1.0-rc.5 · submission-ready</i>"]
     P4["<b>mobility-applicability-bound</b><br/>Empirical instantiation of C1 on<br/>34,858 French commune mobility panel<br/><i>TR-B target · early draft</i>"]
-    P2["<b>(planned) negative-transfer corollary</b><br/>C2 — spectral disjointness bound<br/><i>verdict GO · ~2 months</i>"]
-    P3["<b>(planned) active-learning corollary</b><br/>C3 — label-complexity dual of C1<br/><i>candidate</i>"]
+    P2["<b>(planned) negative-transfer-corollary</b><br/>C2 empirical anchor on QM9 → MatBench<br/><i>theory done in P5; experiments TBD</i>"]
+    P3["<b>(planned) active-learning-corollary</b><br/>C3 empirical anchor: leverage-score vs uniform<br/><i>theory done in P5; experiments TBD</i>"]
 
     P5 -->|C1| P1
     P5 -->|C2| P2
@@ -91,7 +91,7 @@ flowchart TD
 
 | Repository | Contribution | Method | Status |
 |:---|:---|:---|:---|
-| **[structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework)** | **Universal spectral lower bound** on graph-supervised learning (contains C1–C3 as corollaries) | Pesenson sampling on arbitrary feature subspaces + Cochran finite-population identity + Talagrand-contraction Rademacher; open conjecture: Pesenson-ridge estimator saturates the bound | **In preparation**, JMLR / FoCM target |
+| **[structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework)** | **Universal spectral lower bound** on graph-supervised learning (contains C1–C3 as corollaries with full proofs) | Transductive Rademacher (El-Yaniv–Pechyony 2006) + Hoeffding–Serfling + Berry–Esseen anticoncentration; sharp matching constant via Le Cam two-point; ERM-on-projection witness saturates | **v0.4 working draft** (20 pp main + 5 pp SI + 5 research notes + cover letter), JMLR / FoCM target |
 | **[materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound)** | **Corollary C1**: first regressor-independent structural lower bound on the applicability-domain gap in materials property prediction | Cochran finite-population identity + Talagrand-contraction Rademacher + Pesenson sampling, validated on 8 MatBench panels with CIG = 18× to 145× above shuffled-kNN null | **v1.0-rc.5, MLST submission-ready** (Zenodo DOI [10.5281/zenodo.20355996](https://doi.org/10.5281/zenodo.20355996)) |
 | **[mobility-applicability-bound](https://github.com/cycling-data-lab/mobility-applicability-bound)** | Empirical instantiation of C1 in urban mobility (why mode-choice models trained in city A fail in city B) | Same framework as materials-applicability-bound, applied to the 34,858 French commune mobility panel | Early draft, TR-B target |
 | **[imd-national-catalogue](https://github.com/cycling-data-lab/imd-national-catalogue)** | IMD-4 cycling environment composite on 34,858 French communes | Bayesian simplex MCMC calibrated on FUB and EMP panels | v0.2 beta (Hugging Face and Zenodo planned) |
@@ -101,7 +101,7 @@ flowchart TD
 | **[gbfs-audit-catalogue](https://github.com/cycling-data-lab/gbfs-audit-catalogue)** | Reproducible audit of 1,509 GBFS bike share feeds across 48 countries | 46 column reference schema with an anomaly detection layer | Stable, Zenodo archived |
 | **[paper-template](https://github.com/cycling-data-lab/paper-template)** | Starter directory for new papers in this organisation | LaTeX + iopjournal.cls + numbered experiment scripts + reproducibility infrastructure + Zenodo metadata, all wired by default | Template repo |
 
-> **Status note.** As of May 2026, [materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound) is the first manuscript from this organisation reaching submission-ready state (MLST, IOP Publishing). The unified framework ([structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework)) is in active preparation; planned negative-transfer (C2) and active-learning (C3) corollaries will follow as standalone repos once their drafts mature. The other working drafts are released openly during the writing process so that feedback can shape the eventual submission.
+> **Status note.** As of May 2026, [materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound) is the first manuscript from this organisation reaching submission-ready state (MLST, IOP Publishing). The unified framework ([structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework)) advanced rapidly to a substantive v0.4 working draft (20 pp main + 5 pp SI + 5 research notes covering Theorems 1–7) including full proofs of Corollaries C2 (negative transfer) and C3 (active learning) absorbed inside the main paper; planned standalone follow-up repositories `negative-transfer-corollary` and `active-learning-corollary` will host the empirical-validation experiments. The other working drafts are released openly during the writing process so that feedback can shape the eventual submission.
 
 ## Open data and reproducibility
 
