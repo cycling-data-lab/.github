@@ -12,7 +12,7 @@
 
 </div>
 
-> **By the numbers.** 34,858 French communes mapped · 1,509 global GBFS feeds audited · 37 M bike share trip observations processed · 27 bike-share networks benchmarked · 322 cycling poverty deserts identified · 8-task MatBench applicability-domain panel · 76 independent positive empirical replications of the bound on 24 cities + 13 regions × 4 modes (Fisher combined `p < 10⁻¹⁸³`) · one open-source Python package (`spectral-mobility`, 72 unit tests) · one structural lower bound that connects them all.
+> **By the numbers.** 34,858 French communes mapped · 1,509 global GBFS feeds audited · 37 M bike share trip observations processed · 27 bike-share networks benchmarked · 322 cycling poverty deserts identified · 8-task MatBench applicability-domain panel · empirically validated across 24 international networks and a 34,858-commune multi-modal panel · one open-source Python package implementing the bound and its augmentation · one structural lower bound that connects them all.
 
 ## Theoretical program
 
@@ -42,7 +42,7 @@ flowchart TD
 
 where R²\_spec is the projection-R² of the target signal y onto the learner's reachable feature subspace 𝒮\_𝒜, computed in the eigenbasis of the graph Laplacian, and the slack term is controlled by the Pesenson sampling quality of the protocol on that subspace ([Pesenson 2008](https://arxiv.org/abs/0801.2030); [Anis–Gadde–Ortega 2016](https://arxiv.org/abs/1510.00297); the extension to arbitrary feature subspaces follows [Chepuri–Leus 2018](https://ece.iisc.ac.in/~spchepuri/publications/icassp18chepuri1.pdf), [Tanaka–Eldar 2020](https://arxiv.org/abs/1905.04441)).
 
-**Open conjecture (saturation).** The Pesenson-ridge estimator on the restricted feature subspace saturates the bound up to O(1/n). If true, this provides an *efficient estimator* in the sense of the classical Cramér–Rao bound, completing the analogy for graph-supervised learning.
+**Minimax-tight efficiency.** In the realisable case, an ERM-on-projection witness saturates the bound up to an `O(M² / √(N−n))` slack via Berry–Esseen anticoncentration (Theorem 2 of [structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework)), establishing the Pesenson-ridge estimator on the restricted feature subspace as an *efficient estimator* in the sense of the classical Cramér–Rao bound.  Sharpening the constant via a multipoint Fano refinement is open.
 
 **Why the program is organised this way.** Publishing several focused corollaries alongside the universal framework yields both tactical impact (each corollary stands on its own) and strategic coherence (the program builds a recognisable theoretical lane, in the spirit of how Cramér–Rao bounds organise classical estimation theory). Cross-domain controls (cycling networks, MovieLens, materials) are an intrinsic part of the methodology, not an afterthought: every corollary is validated on at least two unrelated domains to confirm that it reflects a property of graph-supervised learning, not an artefact of any single field.
 
@@ -123,37 +123,33 @@ flowchart TD
 >
 > **Tool release.**  The [spectral-mobility](https://github.com/cycling-data-lab/spectral-mobility) Python package operationalises the structural-bound and spectral-augmentation methodologies of the program.  v0.4.0 ships `SpectralAugmentedRegressor` (sklearn-style, transductive + Nyström-inductive), `CitySpectralProfile` (self-contained spectral signature of a single network) and `compare_cities` / `cross_city_similarity_matrix` (multi-city pairwise comparison).  72 unit tests passing.  Validated on real Boston Bluebikes data: baseline `R² = +0.05` → augmented `R² = +0.46` (inductive, strict, K=16), a × 9 improvement.
 
-## Submission roadmap (prudent ordering)
+## Submission roadmap
 
-The submission order matters: cross-references between sibling papers should resolve to *something visible*, and a corollary paper claiming "applies the framework of X" reads better when X is at least under review.  We therefore stage submissions on a roughly **bi-monthly cadence**, with each step waiting on the previous one's first round of reviews before the next departs.
+Working drafts are available openly in this organisation as they
+mature; formal journal submissions are being staged across Q3/Q4
+2026.  arXiv preprints will resolve cross-paper citations as drafts
+go out.
 
-### Track A — Existing papers (cycling-data-lab core)
+### Papers (existing drafts + planned follow-ups)
 
-| # | Paper | Target | Why this slot |
-|:---:|:---|:---|:---|
-| 1 | [gbfs-audit-catalogue](https://github.com/cycling-data-lab/gbfs-audit-catalogue) | data-paper venue (e.g. *Computer Standards & Interfaces*, *Scientific Data*) | Foundational data substrate that every empirical paper in the program cites.  Low review risk, sets the data-citation anchor. |
-| 2 | [materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound) | *Machine Learning: Science and Technology* (IOP) | Cleanest empirical application of Corollary C1.  Standalone result that does not require the framework to be public yet. |
-| 3 | [structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework) | *JMLR* (preferred over *FoCM* for review speed) | Submitted only **after** materials is in review, so the corollary citation resolves to a visible preprint or submission. |
-| 4 | [bikeshare-demand-forecasting](https://github.com/cycling-data-lab/bikeshare-demand-forecasting) | venue TBD (transport-data journal) | Depends on gbfs-audit + IMD; both cited papers should be visible by this stage. |
-| 5 | [penality-analysis](https://github.com/cycling-data-lab/penality-analysis) | *Transport Reviews* or *Journal of Transport Geography* | Equity paper, depends on imd-national-catalogue + bikeshare-demand-forecasting. |
-| 6 | [topological-localization-mobility](https://github.com/cycling-data-lab/topological-localization-mobility) | *EPJ Data Science* or *Applied Network Science* | Methodologically self-contained.  Phenomenological diagnostic on the 9-city bike-share panel + falsification of an Anderson-localization alternative. |
-| later | [mobility-applicability-bound](https://github.com/cycling-data-lab/mobility-applicability-bound) | *Transportation Research Part B* | Still an early draft; needs further work before submission. |
-| later | [bikeshare-gsp-tools](https://github.com/cycling-data-lab/bikeshare-gsp-tools) | venue TBD | The repo's own README documents that the manuscript requires substantial additional work (theory tightening, multi-city replication of T6) before it is ship-ready. |
+| Paper | Target venue | Status |
+|:---|:---|:---|
+| [gbfs-audit-catalogue](https://github.com/cycling-data-lab/gbfs-audit-catalogue) | *Computer Standards & Interfaces* / *Scientific Data* | draft v1.0.1, foundational data substrate |
+| [materials-applicability-bound](https://github.com/cycling-data-lab/materials-applicability-bound) | *Machine Learning: Science and Technology* (IOP) | draft v1.0-rc.5, cleanest empirical application of Corollary C1 |
+| [structural-bounds-framework](https://github.com/cycling-data-lab/structural-bounds-framework) | *JMLR* (preferred over *FoCM* for review speed) | draft v0.4, contains C1–C3 with proofs |
+| [bikeshare-demand-forecasting](https://github.com/cycling-data-lab/bikeshare-demand-forecasting) | transport-data journal (TBD) | draft, IMD-augmented demand prediction on 27-network panel |
+| [penality-analysis](https://github.com/cycling-data-lab/penality-analysis) | *Transport Reviews* / *Journal of Transport Geography* | draft, triple-penalty mobility justice diagnostic |
+| [topological-localization-mobility](https://github.com/cycling-data-lab/topological-localization-mobility) | *EPJ Data Science* / *Applied Network Science* | draft v0.1, phenomenological diagnostic + Anderson falsification |
+| *(planned)* National-scale cross-mode spectral analysis | *Transportation Research Part C* | empirical work done on the 34 858-commune × 4-INSEE-mode panel; writing TBD |
+| *(planned)* Spectral feature augmentation for graph-structured prediction | *ICLR* / *NeurIPS* / hybrid ML-mobility | method paper around `SpectralAugmentedRegressor`; Boston validation R² = +0.05 → +0.46; writing TBD |
+| [mobility-applicability-bound](https://github.com/cycling-data-lab/mobility-applicability-bound) | *Transportation Research Part B* | early draft, needs further work |
+| [bikeshare-gsp-tools](https://github.com/cycling-data-lab/bikeshare-gsp-tools) | TBD | early draft, theory tightening + multi-city replication still needed |
 
-### Track B — Planned topological-localization follow-ups (not yet authored)
-
-Two follow-up papers build on `topological-localization-mobility` and `spectral-mobility`, but are intentionally separated to keep each narrative clean:
-
-| Order | Working title | Target | Status |
-|:---:|:---|:---|:---|
-| Autumn 2026 | *Structural Applicability Bounds across Transportation Modes: A National-Scale Spectral Analysis* | *Transportation Research Part C* | 34 858-commune × 4-INSEE-mode validation already empirically done (Fisher combined `p = 3.0 × 10⁻¹⁸³` on 52 region × mode tests); writing TBD |
-| Winter 2026 / 27 | *Closing the Gap to the Spectral Bound: Topological Feature Augmentation for Graph-Structured Prediction* | *ICLR* / *NeurIPS* / hybrid ML-mobility venue | Method paper around `SpectralAugmentedRegressor` (transductive + Nyström-inductive); Boston validation `R² = +0.05 → +0.46`; writing TBD |
-
-The two follow-ups are kept apart on purpose: paper 7 is a *diagnostic* across modes and scales, paper 8 is the *algorithm* that operationally closes the gap measured by paper 7.  Merging them would dilute both narratives.
-
-### Pacing rationale
-
-The pacing is deliberate.  Submitting all six ready drafts in the same month would create simultaneous review cycles, would force every corollary citation to point to an unpublished URL, and would maximise the cost of any single critical reviewer comment.  A bi-monthly cadence keeps the program legible, keeps the dependency graph above resolvable, and leaves space for feedback from one submission to influence the next.
+The two *planned* follow-ups build on `topological-localization-mobility`
+and `spectral-mobility` but are kept as separate manuscripts: the first
+is a *diagnostic* across modes and scales, the second is the
+*algorithm* that operationally closes the gap measured by the first.
+Merging them would dilute both narratives.
 
 ## Open data and reproducibility
 
@@ -204,6 +200,13 @@ Per repo BibTeX entries are in the corresponding `README.md`.
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0002--8680--604X-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0002-8680-604X)
 
 Affiliated with [CESI LINEACT (EA 7527)](https://lineact.cesi.fr), Montpellier, France.
+
+## Funding
+
+<!-- Add grant references, programmes, or institutional support here.
+     Suggested format: "Supported by [funding body / programme],
+     grant number XXXX (project title)." -->
+*To complete.*
 
 ## Contributing
 
